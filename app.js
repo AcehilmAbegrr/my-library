@@ -26,8 +26,10 @@ const nav = [{
 }
 ];
 const bookRouter = require('./src/routes/bookRoutes')(nav);
+const adminRouter = require('./src/routes/adminRoutes')(nav);
 
 app.use('/books', bookRouter);
+app.use('/admin', adminRouter);
 
 app.get('/', (req, res) => {
   res.render(
@@ -38,6 +40,6 @@ app.get('/', (req, res) => {
   );
 });
 
-app.listen(3000, () => {
-  debug(`listening on port ${chalk.green('3000')}`);
+app.listen(4000, () => {
+  debug(`listening on port ${chalk.green('4000')}`);
 });
