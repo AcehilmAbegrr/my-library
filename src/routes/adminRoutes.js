@@ -47,7 +47,7 @@ const router = (nav) => {
           const response = await db.collection('books').insertMany(books);
           res.json(response);
         } catch (error) {
-          debug(err.stack);
+          debug(error.stack);
         }
 
         client.close();
