@@ -3,10 +3,11 @@ const {
   MongoClient
 } = require('mongodb');
 const debug = require('debug')('app:authRoutes');
+const passport = require('passport')
 
 const authRouter = express.Router();
 
-module.exports = function router() {
+module.exports = function router(nav) {
   authRouter.route('/signup')
     .post((req, res) => {
       debug(req.body);
@@ -41,10 +42,21 @@ module.exports = function router() {
       // create user
       
     });
+  authRouter.route('/signin')
+    .get((req, res) => {
+      res.render('signin', {
+        nav,
+        title: 'Sign In'
+      });
+    })
+    .post(passport.authenticate('local', {
+      successRedirect: '/auth/profile',
+      failureRedirect: '/'
+    }));
   authRouter.route('/profile')
     .get((req, res) => {
-      debug(`user is ${req.user}`);
-      res.json(req.user);
+      debug(`user is ${req.session.passport.user}`);
+      res.json(req.session.passport.user);
     });
   return authRouter;
 };
